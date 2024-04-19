@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+nav {
+    background-color: #444;
+    padding: 10px 0;
+    text-align: center;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+}
+nav a:hover {
+    color: #ccc;
+}
+.logo{
+    
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+.portafolio{
+    height: 100px;
+    width: 100px;
+    border-radius: 30%;
+}
+section {
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+}
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+form {
+    margin-bottom: 20px;
+}
+input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
