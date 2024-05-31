@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de JavaScript: Funciones y Objetos</title>
+</head>
+<body>
+    <h1>Ejercicios de JavaScript: Funciones y Objetos</h1>
+    <p>Para ver los resultados de las funciones presione F12.</p>
+    <script>
+        // Ejercicio 1
+        const calcularFactorial = function(n) {
+            if (n < 0) return "El número debe ser un entero no negativo.";
+            let factorial = 1;
+            for (let i = 1; i <= n; i++) {
+                factorial *= i;
+            }
+            return factorial;
+        };
+
+        console.log("Ejercicio 1: Factorial de 5:", calcularFactorial(5)); // 120
+
+        // Ejercicio 2
+        function esPalindromo(cadena) {
+            let cadenaLimpia = cadena.toLowerCase().replace(/[^a-z0-9]/g, '');
+            return cadenaLimpia === cadenaLimpia.split('').reverse().join('');
+        }
+
+        console.log("Ejercicio 2: 'La ruta nos aporto otro paso natural' es palíndromo:", esPalindromo('La ruta nos aporto otro paso natural')); // true
+
+        // Ejercicio 3
+        const persona = {
+            nombre: 'Juan',
+            apellido: 'Pérez',
+            edad: 30,
+            saludar: function() {
+                console.log(`Hola, me llamo ${this.nombre} ${this.apellido} y tengo ${this.edad} años.`);
+            }
+        };
+
+        console.log("Ejercicio 3: Saludo de persona:");
+        persona.saludar();
+
+        // Ejercicio 4
+        const crearLibro = function(titulo, autor, editorial, añoEdicion) {
+            return {
+                titulo: titulo,
+                autor: autor,
+                editorial: editorial,
+                añoEdicion: añoEdicion
+            };
+        };
+
+        const libro = crearLibro('El Quijote', 'Miguel de Cervantes', 'Editorial EDAF', 1605);
+        console.log("Ejercicio 4: Libro creado:", libro);
+
+        // Ejercicio 5
+        const empresa = {
+            empleados: [],
+            agregarEmpleado: function(nombre, salario) {
+                this.empleados.push({ nombre: nombre, salario: salario });
+            },
+            calcularSalarioPromedio: function() {
+                if (this.empleados.length === 0) return 0;
+                let totalSalario = this.empleados.reduce((total, empleado) => total + empleado.salario, 0);
+                return totalSalario / this.empleados.length;
+            },
+            obtenerEmpleadoSalarioMasAlto: function() {
+                if (this.empleados.length === 0) return null;
+                return this.empleados.reduce((max, empleado) => empleado.salario > max.salario ? empleado : max);
+            }
+        };
+
+        empresa.agregarEmpleado('Ana', 5100);
+        empresa.agregarEmpleado('Luis', 6500);
+        empresa.agregarEmpleado('Juan', 5000);
+
+        console.log("Ejercicio 5: Salario promedio de la empresa:", empresa.calcularSalarioPromedio());
+        console.log("Ejercicio 5: Empleado con salario más alto:", empresa.obtenerEmpleadoSalarioMasAlto());
+
+        // Ejercicio 6
+        function filtrarPorValor(arr, propiedad, valor) {
+            return arr.filter(obj => obj[propiedad] === valor);
+        }
+
+        const personas = [
+            { nombre: 'Ana', edad: 30 },
+            { nombre: 'Luis', edad: 25 },
+            { nombre: 'Pedro', edad: 30 }
+        ];
+
+        console.log("Ejercicio 6: Filtrar por edad 30:", filtrarPorValor(personas, 'edad', 30)); // [{ nombre: 'Ana', edad: 30 }, { nombre: 'Pedro', edad: 30 }]
+    </script>
+</body>
+</html>
