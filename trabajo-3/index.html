@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de JavaScript: Funciones y Objetos</title>
+</head>
+<body>
+    <h1>Ejercicios de JavaScript: Funciones y Objetos</h1>
+    <p>Para ver los resultados de las funciones presione F12.</p>
+    <script>
+        // Ejercicio 1
+        const contarPalabra = (texto, palabra) => {
+            if (typeof texto !== "string" || typeof palabra !== "string") {
+                return "Ambos parámetros deben ser cadenas de texto.";
+            }
+            return texto.split(palabra).length - 1;
+        };
+        console.log(contarPalabra("hola mundo chau mundo", "mundo"));
+
+        // Ejercicio 2
+        const eliminarPatron = (texto, patron) => {
+            if (typeof texto !== "string" || typeof patron !== "string") {
+                return "Ambos parámetros deben ser cadenas de texto.";
+            }
+            return texto.split(patron).join("");
+        };
+        console.log(eliminarPatron("xyz1, xyz2, xyz3, xyz4 y xyz5", "xyz"));
+
+        // Ejercicio 3
+        const convertirBase = (numero, base) => {
+            if (base === 2) {
+                return parseInt(numero, 2);
+            } else if (base === 10) {
+                return numero.toString(2);
+            } else {
+                return "Base no soportada.";
+            }
+        };
+        console.log(convertirBase(100, 2));
+        console.log(convertirBase(4, 10));
+
+        // Ejercicio 4
+        const calcularAnios = fecha => {
+            if (!(fecha instanceof Date)) {
+                return "El parámetro debe ser un objeto Date.";
+            }
+            const hoy = new Date();
+            let anios = hoy.getFullYear() - fecha.getFullYear();
+            const mes = hoy.getMonth() - fecha.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
+                anios--;
+            }
+            return anios;
+        };
+        console.log(calcularAnios(new Date(1987, 10, 5)));
+
+        // Ejercicio 5
+        const contarLetras = texto => {
+            if (typeof texto !== "string") {
+                return "El parámetro debe ser una cadena de texto.";
+            }
+            const vocales = texto.match(/[aeiou]/gi)?.length || 0;
+            const consonantes = texto.match(/[bcdfghjklmnpqrstvwxyz]/gi)?.length || 0;
+            return `Vocales: ${vocales}, Consonantes: ${consonantes}`;
+        };
+        console.log(contarLetras("Hola Mundo"));
+
+        // Ejercicio 6
+        const eliminarDuplicados = arr => {
+            if (!Array.isArray(arr)) {
+                return "El parámetro debe ser un arreglo.";
+            }
+            return [...new Set(arr)];
+        };
+        console.log(eliminarDuplicados(["x", 10, "x", 2, "10", 10, true, true]));
+
+        // Ejercicio 7
+        const obtenerPromedio = arr => {
+            if (!Array.isArray(arr) || arr.some(num => typeof num !== "number")) {
+                return "El parámetro debe ser un arreglo de números.";
+            }
+            const suma = arr.reduce((acc, num) => acc + num, 0);
+            return suma / arr.length;
+        };
+        console.log(obtenerPromedio([9,8,7,6,5,4,3,2,1,0]));
+
+        // Ejercicio 8
+        class Pelicula {
+            static generosAceptados = ["Action", "Animation", "Comedy", "Drama", "Horror", "Musical", "Thriller"];
+
+            constructor({ id, titulo, director, anioEstreno, pais, generos, calificacion }) {
+                this.id = id;
+                this.titulo = titulo;
+                this.director = director;
+                this.anioEstreno = anioEstreno;
+                this.pais = pais;
+                this.generos = generos;
+                this.calificacion = calificacion;
+
+                this.validarId();
+                this.validarTitulo();
+                this.validarDirector();
+                this.validarAnioEstreno();
+                this.validarPais();
+                this.validarGeneros();
+                this.validarCalificacion();
+            }
+
+            validarCadena(propiedad, valor, maxLength) {
+                if (typeof valor !== "string") throw new Error(`${propiedad} debe ser una cadena de texto.`);
+                if (valor.length > maxLength) throw new Error(`${propiedad} no puede tener más de ${maxLength} caracteres.`);
+            }
+
+            validarNumero(propiedad, valor) {
+                if (typeof valor !== "number") throw new Error(`${propiedad} debe ser un número.`);
+            }
+
+            validarArreglo(propiedad, valor) {
+                if (!Array.isArray(valor)) throw new Error(`${propiedad} debe ser un arreglo.`);
+            }
+
+            validarId() {
+                if (!/^([A-Za-z]{2}[0-9]{7})$/.test(this.id)) throw new Error("ID debe tener 9 caracteres, los primeros 2 letras y los 7 restantes números.");
+            }
+
+            validarTitulo() {
+                this.validarCadena("Título", this.titulo, 100);
+            }
+
+            validarDirector() {
+                this.validarCadena("Director", this.director, 50);
+            }
+
+            validarAnioEstreno() {
+                this.validarNumero("Año de estreno", this.anioEstreno);
+                if (!(/^[0-9]{4}$/.test(this.anioEstreno))) throw new Error("Año de estreno debe ser un número entero de 4 dígitos.");
+            }
+
+            validarPais() {
+                this.validarArreglo("País", this.pais);
+            }
+
+            validarGeneros() {
+                this.validarArreglo("Géneros", this.generos);
+                this.generos.forEach(genero => {
+                    if (!Pelicula.generosAceptados.includes(genero)) {
+                        throw new Error(`Género(s) no válido(s): ${genero}. Los géneros aceptados son: ${Pelicula.generosAceptados.join(", ")}.`);
+                    }
+                });
+            }
+
+            validarCalificacion() {
+                this.validarNumero("Calificación", this.calificacion);
+                if (this.calificacion < 0 || this.calificacion > 10) throw new Error("Calificación debe estar entre 0 y 10.");
+            }
+
+            static getGenerosAceptados() {
+                return Pelicula.generosAceptados;
+            }
+
+            fichaTecnica() {
+                return `Ficha Técnica de la Película:\nTítulo: ${this.titulo}\nDirector: ${this.director}\nAño: ${this.anioEstreno}\nPaís: ${this.pais.join(", ")}\nGéneros: ${this.generos.join(", ")}\nCalificación: ${this.calificacion}`;
+            }
+        }
+
+        const peliculas = [
+            { id: "AB1234567", titulo: "Pelicula 1", director: "Director 1", anioEstreno: 2001, pais: ["EEUU"], generos: ["Action", "Comedy"], calificacion: 8.5 },
+            { id: "CD2345678", titulo: "Pelicula 2", director: "Director 2", anioEstreno: 2002, pais: ["México"], generos: ["Drama"], calificacion: 7.0 },
+            { id: "EF3456789", titulo: "Pelicula 3", director: "Director 3", anioEstreno: 2003, pais: ["España"], generos: ["Horror", "Thriller"], calificacion: 9.0 }
+        ];
+
+        peliculas.forEach(pelicula => {
+            try {
+                const p = new Pelicula(pelicula);
+                console.log(p.fichaTecnica());
+            } catch (error) {
+                console.error(error.message);
+            }
+        });
+    </script>
+</body>
+</html>
